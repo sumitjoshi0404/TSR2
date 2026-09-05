@@ -1038,7 +1038,7 @@ body.nav-locked {
   .hero-media, header, .logo-link img { transition: none; }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 860px) {header { z-index: 300; }
   .nav-toggle { display: flex; }
 
   .navlinks {

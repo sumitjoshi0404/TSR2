@@ -7,6 +7,167 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============================================================
+       GALLERY PAGE — photo-grid + lightbox styles
+       Self-contained here so this file can be swapped in on its
+       own. Uses the same color variables defined in style.css.
+       ============================================================ */
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .photo-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #161412;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .photo-tile.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .photo-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, filter 0.3s ease;
+    }
+
+    .photo-tile:hover img {
+      transform: scale(1.08);
+    }
+
+    .photo-tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(8, 8, 8, 0.55) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .photo-tile:hover::after {
+      opacity: 1;
+    }
+
+    .photo-grid-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+    }
+
+    /* ---------- Lightbox ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(8, 8, 8, 0.94);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-img {
+      max-width: min(92vw, 1100px);
+      max-height: 86vh;
+      border-radius: 6px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .lightbox.open .lightbox-img {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .lightbox-close,
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      background: rgba(244, 238, 228, 0.08);
+      border: 1px solid rgba(244, 238, 228, 0.2);
+      color: var(--cream);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-prev:hover,
+    .lightbox-next:hover {
+      background: var(--orange-hot);
+      border-color: var(--orange-hot);
+      transform: scale(1.06);
+    }
+
+    .lightbox-close { top: 24px; right: 24px; }
+    .lightbox-prev { left: 24px; top: 50%; transform: translateY(-50%); }
+    .lightbox-next { right: 24px; top: 50%; transform: translateY(-50%); }
+    .lightbox-prev:hover, .lightbox-next:hover { transform: translateY(-50%) scale(1.06); }
+
+    .lightbox-close svg,
+    .lightbox-prev svg,
+    .lightbox-next svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .photo-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .photo-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-close { top: 14px; right: 14px; }
+      .lightbox-close, .lightbox-prev, .lightbox-next { width: 38px; height: 38px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -21,6 +182,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="team.html">Team</a></li>
           <li><a href="car.html">The Buggy</a></li>
+          <li><a href="history.html">History</a></li>
           <li><a href="gallery.html" class="active">Gallery</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -43,9 +205,24 @@
 
   <section class="content-section gallery-section">
     <div class="wrap">
-      <div class="gallery-grid" id="gallery-container"></div>
+      <div class="photo-grid" id="photo-grid"></div>
     </div>
   </section>
+
+  <!-- Lightbox (fills in automatically from the images above) -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <button class="lightbox-next" id="lightbox-next" aria-label="Next image">
+      <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
 
   <footer>
     <div class="wrap footer-inner">
@@ -54,28 +231,128 @@
         <a href="about.html">About</a>
         <a href="team.html">Team</a>
         <a href="car.html">Car</a>
+        <a href="history.html">History</a>
         <a href="gallery.html">Gallery</a>
         <a href="contact.html">Contact</a>
       </div>
     </div>
   </footer>
 
-  <script src="data.js"></script>
   <script>
-    document.getElementById('gallery-container').innerHTML = TSR_DATA.gallery.map((item, index) => `
-      <article class="field-card field-card-${index + 1}">
-        <div class="field-photo ${item.image ? '' : 'no-photo'}">
-          ${item.image
-            ? `<img src="${item.image}" alt="${item.title}" onerror="this.parentElement.classList.add('no-photo'); this.remove();">`
-            : ''}
-          <span class="field-number">0${index + 1}</span>
+    /* ============================================================
+       ✏️  EDIT ZONE — add your gallery photos here.
+       ------------------------------------------------------------
+       Just add a new line with the path (or full URL) to each
+       image. No titles, no captions — this feeds a plain photo
+       grid, same as a phone gallery. Supports up to ~20 images
+       comfortably (you can add more, the grid keeps growing).
+
+       Where to put image files:
+         Drop them in  assets/images/gallery/  and reference them
+         as  "assets/images/gallery/your-file.jpg"
+         (or paste any direct image URL instead).
+       ============================================================ */
+    const GALLERY_IMAGES = [
+      "img1.png",
+      "img2.png",
+      "img3.png",
+
+      // "assets/images/gallery/04.jpg",
+      // "assets/images/gallery/05.jpg",
+      // "assets/images/gallery/06.jpg",
+      // "assets/images/gallery/07.jpg",
+      // "assets/images/gallery/08.jpg",
+      // "assets/images/gallery/09.jpg",
+      // "assets/images/gallery/10.jpg",
+      // "assets/images/gallery/11.jpg",
+      // "assets/images/gallery/12.jpg",
+      // "assets/images/gallery/13.jpg",
+      // "assets/images/gallery/14.jpg",
+      // "assets/images/gallery/15.jpg",
+      // "assets/images/gallery/16.jpg",
+      // "assets/images/gallery/17.jpg",
+      // "assets/images/gallery/18.jpg",
+      // "assets/images/gallery/19.jpg",
+      // "assets/images/gallery/20.jpg",
+    ];
+    /* ============================================================
+       End of edit zone — nothing below this line needs to change.
+       ============================================================ */
+
+    const grid = document.getElementById('photo-grid');
+
+    if (!GALLERY_IMAGES.length) {
+      grid.innerHTML = '<div class="photo-grid-empty">No photos yet — add image paths in the EDIT ZONE at the bottom of gallery.html.</div>';
+    } else {
+      grid.innerHTML = GALLERY_IMAGES.map((src, i) => `
+        <div class="photo-tile" data-index="${i}">
+          <img src="${src}" alt="Team SJEC Racing gallery photo ${i + 1}" loading="lazy">
         </div>
-        <div class="field-card-body">
-          <h3>${item.title}</h3>
-          <p>${item.caption}</p>
-        </div>
-      </article>
-    `).join('');
+      `).join('');
+    }
+
+    // Fade tiles in as they scroll into view
+    const tiles = document.querySelectorAll('.photo-tile');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      tiles.forEach((t, i) => {
+        t.style.transitionDelay = Math.min(i * 40, 400) + 'ms';
+        io.observe(t);
+      });
+    } else {
+      tiles.forEach((t) => t.classList.add('is-visible'));
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      if (!GALLERY_IMAGES.length) return;
+      currentIndex = (index + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+      lightboxImg.src = GALLERY_IMAGES[currentIndex];
+      lightboxCounter.textContent = `${currentIndex + 1} / ${GALLERY_IMAGES.length}`;
+    }
+
+    function openLightbox(index) {
+      showImage(index);
+      lightbox.classList.add('open');
+      document.body.classList.add('nav-locked');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.classList.remove('nav-locked');
+    }
+
+    grid.addEventListener('click', (e) => {
+      const tile = e.target.closest('.photo-tile');
+      if (tile) openLightbox(parseInt(tile.dataset.index, 10));
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-prev').addEventListener('click', () => showImage(currentIndex - 1));
+    document.getElementById('lightbox-next').addEventListener('click', () => showImage(currentIndex + 1));
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+      if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+    });
   </script>
   <script src="motion.js"></script>
 </body>

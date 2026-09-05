@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team SJEC Racing — History</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============================================================
+       HISTORY PAGE — timeline of past tours & competitions.
+       Self-contained here so this file can be swapped in on its
+       own. Uses the same color variables defined in style.css.
+       ============================================================ */
+
+    .history-section {
+      padding: 100px 0;
+      background: var(--black);
+    }
+
+    .history-timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 90px;
+    }
+
+    .history-timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .history-entry {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 54px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .history-entry.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .history-entry:nth-child(even) .history-media { order: 2; }
+    .history-entry:nth-child(even) .history-copy { order: 1; text-align: right; }
+    .history-entry:nth-child(even) .history-copy .card-index { justify-content: flex-end; }
+
+    .history-dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--orange-hot);
+      box-shadow: 0 0 0 5px var(--black), 0 0 0 6px var(--line);
+      z-index: 2;
+    }
+
+    .history-media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0d0d0c;
+    }
+
+    .history-media img,
+    .history-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .history-year-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 6px 12px;
+      background: rgba(8, 8, 8, 0.65);
+      border: 1px solid rgba(244, 238, 228, 0.2);
+      border-radius: 3px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      color: var(--gold);
+    }
+
+    .history-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(100deg, var(--orange-hot), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(255, 90, 31, 0.35);
+    }
+
+    .history-play svg {
+      width: 18px;
+      height: 18px;
+      fill: #120803;
+      margin-left: 2px;
+    }
+
+    .history-media.is-playing .history-play {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .history-copy .card-index {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .history-copy h3 {
+      font-size: clamp(22px, 2.6vw, 30px);
+      margin: 10px 0 12px;
+    }
+
+    .history-copy p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    .history-entry:nth-child(even) .history-copy p {
+      margin-left: auto;
+    }
+
+    .history-meta {
+      display: inline-block;
+      margin-top: 14px;
+      color: var(--orange-hot);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .history-grid-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+    }
+
+    @media (max-width: 800px) {
+      .history-timeline::before { left: 20px; }
+      .history-dot { left: 20px; }
+      .history-entry,
+      .history-entry:nth-child(even) {
+        grid-template-columns: 1fr;
+        padding-left: 46px;
+        text-align: left !important;
+      }
+      .history-entry:nth-child(even) .history-media,
+      .history-entry:nth-child(even) .history-copy {
+        order: initial;
+      }
+      .history-entry:nth-child(even) .history-copy .card-index {
+        justify-content: flex-start;
+      }
+      .history-entry:nth-child(even) .history-copy p {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="Team SJEC Racing logo">
+        </a>
+        <ul class="navlinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="car.html">The Buggy</a></li>
+          <li><a href="history.html" class="active">History</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="page-header-media">
+      <video autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="assets/videos/hero-loop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> OUR JOURNEY</div>
+      <h1>Every season<br><span class="accent">leaves a mark.</span></h1>
+      <p class="lede">A look back at the tours, competitions, and milestones that built the team.</p>
+    </div>
+  </section>
+
+  <section class="history-section">
+    <div class="wrap">
+      <div class="history-timeline" id="history-timeline"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div id="footer-copy">© 2026 Team SJEC Racing</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="car.html">Car</a>
+        <a href="history.html">History</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       ✏️  EDIT ZONE — add your team's history here.
+       ------------------------------------------------------------
+       One entry per tour / competition / milestone. Each entry
+       needs a year, a title, a short description, and one piece
+       of media — either an image OR a video.
+
+       media.type   → "image" or "video"
+       media.src    → path to the file (or a full URL)
+
+       Where to put files:
+         Images → assets/images/history/your-file.jpg
+         Videos → assets/videos/history/your-file.mp4
+
+       Entries are shown in the order you list them below, oldest
+       or newest first — whichever you prefer. Add as many as you
+       like, the timeline keeps growing.
+       ============================================================ */
+    const HISTORY_ENTRIES = [
+      {
+        year: "2023",
+        title: "First Rollout — BAJA SAE India",
+        description: "Team SJEC Racing's debut competition entry. Cleared technical inspection on the first attempt and finished the endurance round.",
+        meta: "Pune, Maharashtra",
+        media: { type: "image", src: "assets/images/img3.png" }
+      },
+      {
+        year: "2024",
+        title: "Off-Road Tour — Coastal Karnataka",
+        description: "A multi-stop testing tour across red-mud trails near Mangaluru, used to validate suspension geometry ahead of season two.",
+        meta: "Mangaluru, Karnataka",
+        media: { type: "video", src: "assets/videos/hero-loop.mp4" }
+      },
+
+      // {
+      //   year: "2025",
+      //   title: "Competition or tour name",
+      //   description: "Short description of what happened, where, and any result worth noting.",
+      //   meta: "Location or result",
+      //   media: { type: "image", src: "assets/images/history/2025-event.jpg" }
+      // },
+      // {
+      //   year: "2025",
+      //   title: "Another event",
+      //   description: "Short description here.",
+      //   meta: "Location or result",
+      //   media: { type: "video", src: "assets/videos/history/2025-event.mp4" }
+      // },
+    ];
+    /* ============================================================
+       End of edit zone — nothing below this line needs to change.
+       ============================================================ */
+
+    const timeline = document.getElementById('history-timeline');
+
+    if (!HISTORY_ENTRIES.length) {
+      timeline.innerHTML = '<div class="history-grid-empty">No history entries yet — add them in the EDIT ZONE at the bottom of history.html.</div>';
+    } else {
+      timeline.innerHTML = HISTORY_ENTRIES.map((entry, i) => `
+        <article class="history-entry">
+          <div class="history-dot"></div>
+          <div class="history-media" data-index="${i}">
+            <span class="history-year-badge">${entry.year}</span>
+            ${entry.media.type === 'video'
+              ? `<video src="${entry.media.src}" muted loop playsinline preload="metadata"></video>
+                 <button class="history-play" aria-label="Play clip">
+                   <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                 </button>`
+              : `<img src="${entry.media.src}" alt="${entry.title}" loading="lazy">`}
+          </div>
+          <div class="history-copy">
+            <span class="card-index">${entry.year}</span>
+            <h3>${entry.title}</h3>
+            <p>${entry.description}</p>
+            ${entry.meta ? `<span class="history-meta">${entry.meta}</span>` : ''}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Reveal entries as they scroll into view
+    const entries = document.querySelectorAll('.history-entry');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((observed) => {
+        observed.forEach((item) => {
+          if (item.isIntersecting) {
+            item.target.classList.add('is-visible');
+            io.unobserve(item.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      entries.forEach((el) => io.observe(el));
+    } else {
+      entries.forEach((el) => el.classList.add('is-visible'));
+    }
+
+    // Click-to-play for any video entries
+    document.querySelectorAll('.history-media').forEach((media) => {
+      const video = media.querySelector('video');
+      const btn = media.querySelector('.history-play');
+      if (!video || !btn) return;
+      btn.addEventListener('click', () => {
+        video.muted = false;
+        video.currentTime = 0;
+        video.play().catch(() => { video.muted = true; video.play(); });
+        media.classList.add('is-playing');
+      });
+      video.addEventListener('ended', () => media.classList.remove('is-playing'));
+      video.addEventListener('click', () => {
+        if (!video.paused) {
+          video.pause();
+          media.classList.remove('is-playing');
+        }
+      });
+    });
+  </script>
+  <script src="motion.js"></script>
+</body>
+</html>

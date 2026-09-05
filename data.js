@@ -7,7 +7,7 @@ const TSR_DATA = {
     email: "team@sjecracing.in",
     location: "Mangaluru, Karnataka",
     social: "@sjecracing",
-    heroImage: "assets/images/img2.png",
+    heroImage: "img2.png",
     stats: [
       { value: "0–40", label: "3.2 SECONDS" },
       { value: "185", label: "KG DRY WEIGHT" },
@@ -19,7 +19,7 @@ const TSR_DATA = {
   featuredCar: {
     model: "TSR-26 BAJA",
     type: "All-Terrain Vehicle",
-    image: "assets/images/img1.png",
+    image: "img1.png",
     specs: [
       { label: "Chassis", value: "Chromoly AISI 4130 Tubular Spaceframe" },
       { label: "Engine", value: "Briggs & Stratton 10HP Vanguard" },
@@ -51,8 +51,8 @@ const TSR_DATA = {
   ],
 
   gallery: [
-    { title: "Tech Inspection Lineup", caption: "Car E04 cleared through roll cage audit", image: "assets/images/img1.png" },
-    { title: "Dynamic Brake Test", caption: "M09 kicking up dust on the endurance run", image: "assets/images/img2.png" },
-    { title: "Pit Lane Ready", caption: "Final grid check before track roll-out", image: "assets/images/img3.png" }
+    { title: "Tech Inspection Lineup", caption: "Car E04 cleared through roll cage audit", image: "img1.png" },
+    { title: "Dynamic Brake Test", caption: "M09 kicking up dust on the endurance run", image: "img2.png" },
+    { title: "Pit Lane Ready", caption: "Final grid check before track roll-out", image: "img3.png" }
   ]
 };

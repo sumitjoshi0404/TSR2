@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team SJEC Racing — About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="Team SJEC Racing logo">
+        </a>
+        <ul class="navlinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="car.html">The Buggy</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="page-header-media">
+      <video autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="assets/videos/hero-loop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> ABOUT US</div>
+      <h1>Who we <span class="accent">are.</span></h1>
+      <p class="lede" id="about-desc"></p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="wrap about-grid">
+      <div class="about-copy">
+        <p id="about-copy-1"></p>
+        <p id="about-copy-2"></p>
+      </div>
+      <div class="about-facts">
+        <h3 style="font-size:14px; letter-spacing:0.12em; color: var(--gold); margin-bottom:20px;">TEAM FACTS</h3>
+        <div class="fact-row"><span>Team name</span><b id="fact-name"></b></div>
+        <div class="fact-row"><span>Based in</span><b id="fact-location"></b></div>
+        <div class="fact-row"><span>Contact</span><b id="fact-email"></b></div>
+        <div class="fact-row"><span>Social</span><b id="fact-social"></b></div>
+        <div class="fact-row"><span>Seasons raced</span><b id="fact-seasons"></b></div>
+        <div class="fact-row"><span>Active members</span><b id="fact-members"></b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section gallery-section">
+    <div class="wrap">
+      <div class="section-heading">
+        <div class="eyebrow"><span class="dot"></span> BY THE NUMBERS</div>
+        <h2>What the team<br><span class="accent">has built.</span></h2>
+      </div>
+      <div class="stat-strip" id="about-stats" style="border-top:none; padding-top:0; margin-top:0;"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div id="footer-copy">© 2026 Team SJEC Racing</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="car.html">Car</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('about-desc').textContent = TSR_DATA.team.description;
+    document.getElementById('about-copy-1').textContent = TSR_DATA.team.description;
+    document.getElementById('about-copy-2').textContent =
+      `${TSR_DATA.team.name} designs, fabricates, and races a new all-terrain vehicle each season, competing at national BAJA SAE events. The team is run by students end to end — chassis, powertrain, electrical, and event logistics — with every member taking on real engineering and project ownership from day one.`;
+
+    document.getElementById('fact-name').textContent = TSR_DATA.team.name;
+    document.getElementById('fact-location').textContent = TSR_DATA.team.location;
+    document.getElementById('fact-email').textContent = TSR_DATA.team.email;
+    document.getElementById('fact-social').textContent = TSR_DATA.team.social;
+
+    const seasons = TSR_DATA.team.stats.find(s => s.label.toLowerCase().includes('season'));
+    const members = TSR_DATA.team.stats.find(s => s.label.toLowerCase().includes('member'));
+    document.getElementById('fact-seasons').textContent = seasons ? seasons.value : '—';
+    document.getElementById('fact-members').textContent = members ? members.value : '—';
+
+    document.getElementById('about-stats').innerHTML = TSR_DATA.team.stats.map(stat => `
+      <div class="stat">
+        <b>${stat.value}</b>
+        <span>${stat.label}</span>
+      </div>
+    `).join('');
+  </script>
+  <script src="motion.js"></script>
+</body>
+</html>

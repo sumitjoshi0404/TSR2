@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team SJEC Racing — Team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="Team SJEC Racing logo">
+        </a>
+        <ul class="navlinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="team.html" class="active">Team</a></li>
+          <li><a href="car.html">The Buggy</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="page-header-media">
+      <video autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="assets/videos/hero-loop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> THE LINEUP</div>
+      <h1>People who build<br><span class="accent">what others test.</span></h1>
+      <p class="lede">Every member on this page owns a real part of the car — from layout and chassis to CVT tuning and drivetrain fabrication.</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="wrap">
+      <div class="member-grid" id="members-container"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div id="footer-copy">© 2026 Team SJEC Racing</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="car.html">Car</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('members-container').innerHTML = TSR_DATA.members.map(member => `
+      <article class="member-card">
+        <span class="card-index">${member.role}</span>
+        <h3>${member.name}</h3>
+        <p>${member.bio}</p>
+        <span class="card-subteam">${member.subteam}</span>
+      </article>
+    `).join('');
+  </script>
+  <script src="motion.js"></script>
+</body>
+</html>

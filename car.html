@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team SJEC Racing — The Buggy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="Team SJEC Racing logo">
+        </a>
+        <ul class="navlinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="car.html" class="active">The Buggy</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="page-header-media">
+      <video autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="assets/videos/hero-loop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> CURRENT MACHINE</div>
+      <h1 id="car-model-name">TSR-26</h1>
+      <p class="lede" id="car-type"></p>
+    </div>
+  </section>
+
+  <section class="spotlight" style="padding-top:70px;">
+    <div class="wrap">
+      <div class="spotlight-grid">
+        <div class="spotlight-image" id="car-spotlight" aria-label="TSR-26 Baja vehicle profile">
+          <span class="machine-number">TSR<span>26</span></span>
+          <span class="machine-label">BAJA SAE / ALL-TERRAIN VEHICLE</span>
+        </div>
+        <div>
+          <div class="spec-table">
+            <h3 id="car-spec-title">TECHNICAL SPECIFICATIONS</h3>
+            <div id="spec-rows-container">
+              <!-- Injected via data.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div id="footer-copy">© 2026 Team SJEC Racing</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="car.html">Car</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('car-model-name').textContent = TSR_DATA.featuredCar.model;
+    document.getElementById('car-type').textContent = TSR_DATA.featuredCar.type;
+
+    if (TSR_DATA.featuredCar.image) {
+      const spotlight = document.getElementById('car-spotlight');
+      const img = document.createElement('img');
+      img.src = TSR_DATA.featuredCar.image;
+      img.alt = TSR_DATA.featuredCar.model;
+      img.onerror = () => { img.remove(); spotlight.classList.remove('has-photo'); };
+      spotlight.classList.add('has-photo');
+      spotlight.prepend(img);
+    }
+
+    const specsContainer = document.getElementById('spec-rows-container');
+    specsContainer.innerHTML = TSR_DATA.featuredCar.specs.map(spec => `
+      <div class="spec-row">
+        <span>${spec.label}</span>
+        <b>${spec.value}</b>
+      </div>
+    `).join('');
+  </script>
+  <script src="motion.js"></script>
+</body>
+</html>

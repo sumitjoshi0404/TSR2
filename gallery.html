@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team SJEC Racing — Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="Team SJEC Racing logo">
+        </a>
+        <ul class="navlinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="car.html">The Buggy</a></li>
+          <li><a href="gallery.html" class="active">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="page-header-media">
+      <video autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="assets/videos/hero-loop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> FIELD NOTES</div>
+      <h1>Built for the<br><span class="accent">rough stuff.</span></h1>
+      <p class="lede">Moments from testing, inspection, and race day.</p>
+    </div>
+  </section>
+
+  <section class="content-section gallery-section">
+    <div class="wrap">
+      <div class="gallery-grid" id="gallery-container"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div id="footer-copy">© 2026 Team SJEC Racing</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="car.html">Car</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('gallery-container').innerHTML = TSR_DATA.gallery.map((item, index) => `
+      <article class="field-card field-card-${index + 1}">
+        <div class="field-photo ${item.image ? '' : 'no-photo'}">
+          ${item.image
+            ? `<img src="${item.image}" alt="${item.title}" onerror="this.parentElement.classList.add('no-photo'); this.remove();">`
+            : ''}
+          <span class="field-number">0${index + 1}</span>
+        </div>
+        <div class="field-card-body">
+          <h3>${item.title}</h3>
+          <p>${item.caption}</p>
+        </div>
+      </article>
+    `).join('');
+  </script>
+  <script src="motion.js"></script>
+</body>
+</html>

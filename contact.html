@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team SJEC Racing — Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="logo-link">
+          <img src="logo.png" alt="Team SJEC Racing logo">
+        </a>
+        <ul class="navlinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="car.html">The Buggy</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="contact-page-section">
+    <div class="wrap contact-page-inner">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> GET INVOLVED</div>
+        <h1>Back the next<br><span class="accent">starting line.</span></h1>
+      </div>
+      <div class="contact-copy">
+        <p>We are always looking for technical partners, workshop support, and people who want to help turn a strong idea into a faster machine.</p>
+        <a class="btn-primary" id="contact-email" href="mailto:team@sjecracing.in">Talk to the team</a>
+        <div class="contact-details">
+          <span id="contact-location-line"></span>
+          <span id="contact-social-line"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reel-section">
+    <div class="wrap">
+      <div class="section-heading">
+        <div class="eyebrow"><span class="dot"></span> RIGHT NOW IN THE GARAGE</div>
+        <h2>We're always<br><span class="accent">building.</span></h2>
+      </div>
+      <article class="reel-card reel-card-wide" tabindex="0">
+        <span class="reel-badge"><span class="rec-dot"></span> RECRUITING SOON</span>
+        <video src="assets/videos/reel-recruit.mp4" poster="assets/images/reel-recruit-poster.jpg" muted loop playsinline preload="metadata"></video>
+        <button class="reel-play" aria-label="Play recruitment clip">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="reel-info">
+          <span class="card-index">BUILD</span>
+          <h3>Fabrication days, gear-up, and rollout</h3>
+          <p>New-member recruitment opens each season — reach out and get involved early.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div id="footer-copy">© 2026 Team SJEC Racing</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="car.html">Car</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('contact-email').href = `mailto:${TSR_DATA.team.email}`;
+    document.getElementById('contact-email').textContent = 'Talk to the team';
+    document.getElementById('contact-location-line').textContent = `📍 ${TSR_DATA.team.location}`;
+    document.getElementById('contact-social-line').textContent = `${TSR_DATA.team.social}`;
+  </script>
+  <script src="motion.js"></script>
+</body>
+</html>

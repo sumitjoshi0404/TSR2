@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Team SJEC Racing — Home</title>
+  <title>Team SJEC Racing — Team</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Navigation -->
   <header>
     <div class="wrap">
       <nav>
@@ -18,9 +17,9 @@
           <img src="logo.png" alt="Team SJEC Racing logo">
         </a>
         <ul class="navlinks">
-          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="team.html">Team</a></li>
+          <li><a href="team.html" class="active">Team</a></li>
           <li><a href="car.html">The Buggy</a></li>
           <li><a href="history.html">History</a></li>
           <li><a href="gallery.html">Gallery</a></li>
@@ -30,111 +29,25 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-media" id="hero-media"></div>
+  <section class="page-header">
+    <div class="page-header-media">
+      <video autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="hero-loop.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="wrap">
-      <div class="eyebrow"><span class="dot"></span> <span id="team-tagline-eyebrow">SJEC RACING · BAJA SAE TEAM</span></div>
-      <h1 id="hero-title">Engineered<br>on the <span class="accent">edge.</span></h1>
-      <p class="lede" id="hero-desc"></p>
-
-      <div class="hero-ctas">
-        <a class="btn-primary" href="team.html">Meet The Team</a>
-        <a class="btn-ghost" href="car.html">Car Specs</a>
-      </div>
-
-      <div class="stat-strip" id="stats-container">
-        <!-- Injected via data.js -->
-      </div>
+      <div class="eyebrow"><span class="dot"></span> THE LINEUP</div>
+      <h1>People who build<br><span class="accent">what others test.</span></h1>
+      <p class="lede">Every member on this page owns a real part of the car — from layout and chassis to CVT tuning and drivetrain fabrication.</p>
     </div>
   </section>
 
-  <!-- Section teasers, each linking to its own dedicated page -->
   <section class="content-section">
     <div class="wrap">
-      <div class="section-heading">
-        <div class="eyebrow"><span class="dot"></span> EXPLORE</div>
-        <h2>Everything about<br><span class="accent">the team.</span></h2>
-      </div>
-      <div class="teaser-grid">
-        <a class="teaser-card" href="about.html">
-          <span class="card-index">01</span>
-          <h3>About</h3>
-          <p>Who we are, where we're based, and what drives the team season to season.</p>
-          <span class="teaser-go">Read more →</span>
-        </a>
-        <a class="teaser-card" href="team.html">
-          <span class="card-index">02</span>
-          <h3>Team</h3>
-          <p>The people behind the chassis, the CVT, and the timing sheets.</p>
-          <span class="teaser-go">Meet the lineup →</span>
-        </a>
-        <a class="teaser-card" href="car.html">
-          <span class="card-index">03</span>
-          <h3>The Buggy</h3>
-          <p>Full technical specifications for the current machine, <span id="teaser-car-model"></span>.</p>
-          <span class="teaser-go">View specs →</span>
-        </a>
-        <a class="teaser-card" href="gallery.html">
-          <span class="card-index">04</span>
-          <h3>Gallery</h3>
-          <p>Field notes and photos from track testing and technical inspection.</p>
-          <span class="teaser-go">See gallery →</span>
-        </a>
-      </div>
+      <div class="member-grid" id="members-container"></div>
     </div>
   </section>
 
-  <!-- Video Reel Showcase -->
-  <section class="reel-section">
-    <div class="wrap">
-      <div class="section-heading">
-        <div class="eyebrow"><span class="dot"></span> ON THE GROUND</div>
-        <h2>Watch the team<br><span class="accent">in motion.</span></h2>
-      </div>
-      <div class="reel-grid">
-        <article class="reel-card" tabindex="0">
-          <span class="reel-badge"><span class="rec-dot"></span> RACE DAY</span>
-          <video src="reel-join.mp4" poster="reel-join-poster.jpg" muted loop playsinline preload="metadata"></video>
-          <button class="reel-play" aria-label="Play race day clip">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-          <div class="reel-info">
-            <span class="card-index">POV</span>
-            <h3>Down the red-mud straight</h3>
-            <p>Full send on the test track outside Mangaluru.</p>
-          </div>
-        </article>
-        <article class="reel-card" tabindex="0">
-          <span class="reel-badge"><span class="rec-dot"></span> IN THE GARAGE</span>
-          <video src="reel-recruit.mp4" poster="reel-recruit-poster.jpg" muted loop playsinline preload="metadata"></video>
-          <button class="reel-play" aria-label="Play garage clip">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-          <div class="reel-info">
-            <span class="card-index">BUILD</span>
-            <h3>Getting the buggy race-ready</h3>
-            <p>Fabrication, gear-up, and final checks before rollout.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact-section" id="contact">
-    <div class="wrap contact-inner">
-      <div>
-        <div class="eyebrow"><span class="dot"></span> GET INVOLVED</div>
-        <h2>Back the next<br><span class="accent">starting line.</span></h2>
-      </div>
-      <div class="contact-copy">
-        <p>We are always looking for technical partners, workshop support, and people who want to help turn a strong idea into a faster machine.</p>
-        <a class="btn-primary" href="contact.html">Talk to the team</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Global Footer -->
   <footer>
     <div class="wrap footer-inner">
       <div id="footer-copy">© 2026 Team SJEC Racing</div>
@@ -148,24 +61,15 @@
     </div>
   </footer>
 
-  <!-- Script Injection -->
   <script src="data.js"></script>
   <script>
-    document.getElementById('hero-desc').textContent = TSR_DATA.team.description;
-
-    document.getElementById('hero-media').innerHTML =
-      `<video autoplay muted loop playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true">
-        <source src="hero-loop.mp4" type="video/mp4">
-       </video>`;
-
-    document.getElementById('teaser-car-model').textContent = TSR_DATA.featuredCar.model;
-
-    const statsContainer = document.getElementById('stats-container');
-    statsContainer.innerHTML = TSR_DATA.team.stats.map(stat => `
-      <div class="stat">
-        <b>${stat.value}</b>
-        <span>${stat.label}</span>
-      </div>
+    document.getElementById('members-container').innerHTML = TSR_DATA.members.map(member => `
+      <article class="member-card">
+        <span class="card-index">${member.role}</span>
+        <h3>${member.name}</h3>
+        <p>${member.bio}</p>
+        <span class="card-subteam">${member.subteam}</span>
+      </article>
     `).join('');
   </script>
   <script src="motion.js"></script>
